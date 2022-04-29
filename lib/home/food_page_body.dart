@@ -6,6 +6,8 @@ import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/icon_and_text_widget.dart';
 import 'package:food_delivery/widgets/small_text.dart';
 
+import '../utils/Dimensions.dart';
+
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   var _currPageValue = 0.0;
   double _scaleFactor = 0.8; //80% of its original size
-  double _height = 220;
+  double _height = Dimensions.pageViewContainer;
   //now, initialize the page value
   @override
   void initState() {
@@ -51,7 +53,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         Container(
-          height: 320,
+          //  height: 320,
+          height: Dimensions.pageView,
           child: PageView.builder(
               //This makes the objects scrollable
               controller: pageController,
@@ -119,13 +122,15 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       child: Stack(
         children: [
           Container(
-            height: 220,
+            //   height: 220, //height of the first container. Replacing this value with the dynamic value for the Dimension class.
+            height: Dimensions
+                .pageViewContainer, //Using the height defined in the class Dimensions
             margin: EdgeInsets.only(
-                left: 10,
-                right:
-                    10), //helps to create empty space between the two container of different pages while scrolling
+                left: Dimensions.width10,
+                right: Dimensions
+                    .width10), //helps to create empty space between the two container of different pages while scrolling
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(Dimensions.radius30),
                 color: Color(0xFFffd28d),
                 // color: index.isEven
                 //     ? Color(0xFF89dad0)
@@ -138,11 +143,15 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 120,
-              margin: EdgeInsets.only(left: 30, right: 30, bottom: 30),
+              //    height: 120, // height of Text container
+              height: Dimensions.pageViewTextContainer,
+              margin: EdgeInsets.only(
+                  left: Dimensions.width30,
+                  right: Dimensions.width30,
+                  bottom: Dimensions.height30),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
                   boxShadow: [
                     BoxShadow(
                         color: Color(0xFFe8e8e8),
@@ -158,13 +167,14 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     ),
                   ]),
               child: Container(
-                padding: EdgeInsets.only(top: 15, left: 15, right: 15),
+                padding: EdgeInsets.only(
+                    top: Dimensions.height15, left: 15, right: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BigText(text: 'Chinese Side'),
                     SizedBox(
-                      height: 10,
+                      height: Dimensions.height10,
                     ),
                     Row(
                       children: [
@@ -176,7 +186,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                     // => This arrow is called Arrow Function, means that it reaturns a function.
                                     Icons.star,
                                     color: AppColors.mainColor,
-                                    size: 15,
+                                    size: Dimensions.iconSize15,
                                   )),
                         ),
                         SizedBox(
@@ -194,7 +204,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: Dimensions.height20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
