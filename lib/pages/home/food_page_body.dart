@@ -6,7 +6,8 @@ import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/icon_and_text_widget.dart';
 import 'package:food_delivery/widgets/small_text.dart';
 
-import '../utils/Dimensions.dart';
+import '../../utils/Dimensions.dart';
+
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
@@ -45,13 +46,14 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   void dispose() {
     pageController
         .dispose(); //when we leave the page in general, we dispose them and let the memory management system know that
-    //we dont need that value and remove from the memory. In this way we keep the memory as small as possible.
+    //we don't need that value and remove from the memory. In this way we keep the memory as small as possible.
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        //slider section one
         Container(
           //  height: 320,
           height: Dimensions.pageView,
@@ -63,6 +65,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 return _buildPageItem(position);
               }),
         ),
+        //Dots
         new DotsIndicator(
           // The dots under the container
           dotsCount: 5,
@@ -73,7 +76,90 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
           ),
-        )
+        ),
+        //Popular text i.e. second section of the page container.
+        SizedBox(
+          height: Dimensions.height30,
+        ),
+        Container(
+          margin: EdgeInsets.only(left: Dimensions.width30),
+          child: Row(
+            //Using crossaxisalignment to bring the "." and "Food pairing" in the same bottom line.
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              BigText(text: "Popular"),
+              SizedBox(
+                width: Dimensions.width10,
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 3),
+                child: BigText(
+                  text: ".",
+                  color: Colors.black26,
+                ),
+              ),
+              SizedBox(
+                width: Dimensions.width10,
+              ),
+              Container(
+                  margin: EdgeInsets.only(bottom: 2),
+                  child: SmallText(text: "Food pairing")),
+            ],
+          ),
+        ),
+        //list of food and images below popular text using listviewbuilder
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),//Helps to scroll the Second container with the Popular text and the list of food.
+           shrinkWrap: true,//We need to make the shrinkwrap true if we remove the container. If the listviewbuilder is inside the container than the shrinkwrap should be disabled.
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(
+                      left: Dimensions.width20, right: Dimensions.width20, bottom: Dimensions.height10),
+                  child: Row(
+                    children: [
+                      //Image section for the second half of the page below Popular.
+                      Container(//This container is for the image below the popular text.
+                        width: Dimensions.listViewImageSize,
+                        height: Dimensions.listViewImageSize,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white38,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                              image: AssetImage("assets/image/food0.png")),
+                        ),
+                      ),
+                      //Text container
+                      Expanded(//Expanded widget will for the container to take all the available space in the container.
+                        child: Container(//mention height and width so that it may be visible
+                          height: Dimensions.listViewTextContSize,//This container is for the text written beside the Popular image.
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(//This helps us to show which side we want to make visible
+                           topRight: Radius.circular(Dimensions.radius20),
+                              bottomRight: Radius.circular(Dimensions.radius20),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: Dimensions.width10, right: Dimensions.width10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                               BigText(text: "Nutritious fruit meal in China"),
+                                SizedBox(height: Dimensions.height10,),
+                                SmallText(text: "With chinese characteristics"),
+                                SizedBox(height: Dimensions.height10,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
       ],
     );
   }
@@ -183,7 +269,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           children: List.generate(
                               5, //Here we are generating 5 stars
                               (index) => Icon(
-                                    // => This arrow is called Arrow Function, means that it reaturns a function.
+                                    // => This arrow is called Arrow Function, means that it returns a function.
                                     Icons.star,
                                     color: AppColors.mainColor,
                                     size: Dimensions.iconSize15,

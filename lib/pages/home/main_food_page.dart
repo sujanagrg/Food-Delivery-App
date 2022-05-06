@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/home/food_page_body.dart';
 import 'package:food_delivery/utils/Dimensions.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/small_text.dart';
+
+import 'food_page_body.dart';
 
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
     // print("current height is " + MediaQuery.of(context).size.height.toString());// Show the height of the current device.
+    // print("current width is " + MediaQuery.of(context).size.width.toString());//This shows the width of the current device.
     return Scaffold(
         body: Column(
       children: [
@@ -72,7 +74,9 @@ class _MainFoodPageState extends State<MainFoodPage> {
           ),
         ),
         //showing the body
-        FoodPageBody(),
+        Expanded(child: SingleChildScrollView(
+          child: FoodPageBody(),
+        ))
       ],
     ));
   }
